@@ -70,9 +70,13 @@ export default function Products() {
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
             {filtered.map(product => (
               <div key={product.id} className="bg-white rounded-2xl p-5 shadow-sm hover:shadow-md transition">
-                <div className="h-32 bg-green-50 rounded-xl flex items-center justify-center mb-4">
-                  <span className="text-4xl">💊</span>
-                </div>
+                <div className="h-32 rounded-xl overflow-hidden mb-4">
+  <img
+    src={`https://source.unsplash.com/300x200/?medicine,${product.category}`}
+    alt={product.name}
+    className="w-full h-full object-cover"
+  />
+</div>
                 <div className="text-xs font-semibold text-green-600 uppercase mb-1">{product.category}</div>
                 <div className="font-semibold text-gray-900 mb-1">{product.name}</div>
                 <div className="text-sm text-gray-400 mb-3">{product.description}</div>
