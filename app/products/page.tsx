@@ -3,6 +3,14 @@ import { useEffect, useState } from 'react'
 import { supabase } from '@/lib/supabase'
 import Link from 'next/link'
 
+const categoryImages: any = {
+  'Pain Relief': 'https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=300&h=200&fit=crop',
+  'Vitamins': 'https://images.unsplash.com/photo-1550572017-edd951b55104?w=300&h=200&fit=crop',
+  'Antibiotics': 'https://images.unsplash.com/photo-1471864190281-a93a3070b6de?w=300&h=200&fit=crop',
+  'Supplements': 'https://images.unsplash.com/photo-1577174881658-0f30ed549adc?w=300&h=200&fit=crop',
+  'default': 'https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=300&h=200&fit=crop',
+}
+
 export default function Products() {
   const [products, setProducts] = useState<any[]>([])
   const [search, setSearch] = useState('')
@@ -69,25 +77,25 @@ export default function Products() {
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
             {filtered.map(product => (
-              <div key={product.id} className="bg-white rounded-2xl p-5 shadow-sm hover:shadow-md transition">
-                <div className="h-32 rounded-xl overflow-hidden mb-4">
-  <img
-    src={`https://source.unsplash.com/300x200/?medicine,${product.category}`}
-    alt={product.name}
-    className="w-full h-full object-cover"
-  />
-</div>
-                <div className="text-xs font-semibold text-green-600 uppercase mb-1">{product.category}</div>
-                <div className="font-semibold text-gray-900 mb-1">{product.name}</div>
-                <div className="text-sm text-gray-400 mb-3">{product.description}</div>
-                {product.requires_prescription && (
-                  <span className="text-xs bg-green-100 text-green-700 px-2 py-1 rounded-full">Rx Required</span>
-                )}
-                <div className="flex items-center justify-between mt-3">
-                  <span className="font-bold text-gray-900">KES {product.price}</span>
-                  <button className="bg-green-600 text-white px-3 py-1.5 rounded-lg text-sm hover:bg-green-500 transition">
-                    Add to Cart
-                  </button>
+              <div key={product.id} className="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition">
+                <img
+                  src={categoryImages[product.category] || categoryImages['default']}
+                  alt={product.name}
+                  className="w-full h-40 object-cover"
+                />
+                <div className="p-5">
+                  <div className="text-xs font-semibold text-green-600 uppercase mb-1">{product.category}</div>
+                  <div className="font-semibold text-gray-900 mb-1">{product.name}</div>
+                  <div className="text-sm text-gray-400 mb-3">{product.description}</div>
+                  {product.requires_prescription && (
+                    <span className="text-xs bg-green-100 text-green-700 px-2 py-1 rounded-full">Rx Required</span>
+                  )}
+                  <div className="flex items-center justify-between mt-3">
+                    <span className="font-bold text-gray-900">KES {product.price}</span>
+                    <button className="bg-green-600 text-white px-3 py-1.5 rounded-lg text-sm hover:bg-green-500 transition">
+                      Add to Cart
+                    </button>
+                  </div>
                 </div>
               </div>
             ))}
