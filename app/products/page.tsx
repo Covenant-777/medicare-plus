@@ -39,9 +39,13 @@ export default function Products() {
 
       <div className="pt-24 px-8 max-w-7xl mx-auto">
         <div className="mb-6">
-          <input type="text" placeholder="Search medicines, vitamins..."
-            value={search} onChange={e => setSearch(e.target.value)}
-      className="w-full max-w-lg border border-gray-200 rounded-xl px-4 py-3 text-sm outline-none focus:border-green-500 text-gray-900"
+          <input
+            type="text"
+            placeholder="Search medicines, vitamins..."
+            value={search}
+            onChange={e => setSearch(e.target.value)}
+            className="w-full max-w-lg border border-gray-200 rounded-xl px-4 py-3 text-sm outline-none focus:border-green-500 text-gray-900"
+          />
         </div>
 
         <div className="flex gap-3 mb-8 flex-wrap">
