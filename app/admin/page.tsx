@@ -4,9 +4,9 @@ import { supabase } from '@/lib/supabase'
 import Link from 'next/link'
 
 export default function Admin() {
-  const [products, setProducts] = useState([])
-  const [orders, setOrders] = useState([])
-  const [prescriptions, setPrescriptions] = useState([])
+  const [products, setProducts] = useState<any[]>([])
+const [orders, setOrders] = useState<any[]>([])
+const [prescriptions, setPrescriptions] = useState<any[]>([])
   const [activeTab, setActiveTab] = useState('products')
   const [newProduct, setNewProduct] = useState({ name: '', description: '', price: '', category: '', stock: '', requires_prescription: false })
   const [adding, setAdding] = useState(false)
@@ -24,7 +24,7 @@ export default function Admin() {
     setPrescriptions(rx || [])
   }
 
-  const addProduct = async (e) => {
+    const addProduct = async (e: any) => {
     e.preventDefault()
     setAdding(true)
     await supabase.from('products').insert({
@@ -40,7 +40,7 @@ export default function Admin() {
     fetchAll()
   }
 
-  const deleteProduct = async (id) => {
+  const deleteProduct = async (id: any) => {
     await supabase.from('products').delete().eq('id', id)
     fetchAll()
   }

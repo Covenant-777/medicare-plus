@@ -12,7 +12,7 @@ export default function Register() {
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
 
-  const handleRegister = async (e) => {
+  const handleRegister = async (e: any) => {
     e.preventDefault()
     setLoading(true)
     const { error } = await supabase.auth.signUp({

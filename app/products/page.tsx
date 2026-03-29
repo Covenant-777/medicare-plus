@@ -4,7 +4,7 @@ import { supabase } from '@/lib/supabase'
 import Link from 'next/link'
 
 export default function Products() {
-  const [products, setProducts] = useState([])
+  const [products, setProducts] = useState<any[]>([])
   const [search, setSearch] = useState('')
   const [category, setCategory] = useState('All')
   const [loading, setLoading] = useState(true)
@@ -15,12 +15,11 @@ export default function Products() {
     fetchProducts()
   }, [])
 
-const fetchProducts = async () => {
-  const { data, error } = await supabase.from('products').select('*')
-  console.log('products:', data, 'error:', error)
-  setProducts(data || [])
-  setLoading(false)
-}
+  const fetchProducts = async () => {
+    const { data } = await supabase.from('products').select('*')
+    setProducts(data || [])
+    setLoading(false)
+  }
 
   const filtered = products.filter(p => {
     const matchSearch = p.name.toLowerCase().includes(search.toLowerCase())
@@ -30,7 +29,6 @@ const fetchProducts = async () => {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      {/* Navbar */}
       <nav className="fixed top-0 left-0 right-0 z-50 bg-white border-b border-gray-100 px-8 h-16 flex items-center justify-between">
         <Link href="/" className="text-green-700 font-bold text-xl">MediCare+</Link>
         <div className="flex gap-4">
@@ -40,32 +38,23 @@ const fetchProducts = async () => {
       </nav>
 
       <div className="pt-24 px-8 max-w-7xl mx-auto">
-        {/* Search */}
         <div className="mb-6">
-          <input
-            type="text"
-            placeholder="Search medicines, vitamins..."
-            value={search}
-            onChange={e => setSearch(e.target.value)}
-            className="w-full max-w-lg border border-gray-200 rounded-xl px-4 py-3 text-sm outline-none focus:border-green-500"
-          />
+          <input type="text" placeholder="Search medicines, vitamins..."
+            value={search} onChange={e => setSearch(e.target.value)}
+            className="w-full max-w-lg border border-gray-200 rounded-xl px-4 py-3 text-sm outline-none focus:border-green-500" />
         </div>
 
-        {/* Categories */}
         <div className="flex gap-3 mb-8 flex-wrap">
           {categories.map(cat => (
             <button key={cat} onClick={() => setCategory(cat)}
               className={`px-4 py-2 rounded-full text-sm font-medium transition ${
-                category === cat
-                  ? 'bg-green-600 text-white'
-                  : 'bg-white border border-gray-200 text-gray-600 hover:border-green-400'
+                category === cat ? 'bg-green-600 text-white' : 'bg-white border border-gray-200 text-gray-600 hover:border-green-400'
               }`}>
               {cat}
             </button>
           ))}
         </div>
 
-        {/* Products Grid */}
         {loading ? (
           <div className="text-center text-gray-400 py-20">Loading products...</div>
         ) : filtered.length === 0 ? (
