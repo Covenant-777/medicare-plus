@@ -2,6 +2,8 @@
 import { useEffect, useState } from 'react'
 import { supabase } from '@/lib/supabase'
 import Link from 'next/link'
+import MiniCart from '../components/MiniCart'
+import { useCart } from '@/lib/cartStore'
 
 const categoryImages: any = {
   'Pain Relief': 'https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=300&h=200&fit=crop',
@@ -16,6 +18,7 @@ export default function Products() {
   const [search, setSearch] = useState('')
   const [category, setCategory] = useState('All')
   const [loading, setLoading] = useState(true)
+  const { cart, addToCart, removeFromCart, total, count, open, setOpen } = useCart()
 
   const categories = ['All', 'Vitamins', 'Pain Relief', 'Antibiotics', 'Supplements', 'Skin Care']
 
@@ -39,9 +42,9 @@ export default function Products() {
     <div className="min-h-screen bg-gray-50">
       <nav className="fixed top-0 left-0 right-0 z-50 bg-white border-b border-gray-100 px-8 h-16 flex items-center justify-between">
         <Link href="/" className="text-green-700 font-bold text-xl">MediCare+</Link>
-        <div className="flex gap-4">
-          <Link href="/cart" className="px-4 py-2 border border-green-600 text-green-600 rounded-full text-sm hover:bg-green-600 hover:text-white transition">Cart</Link>
+        <div className="flex items-center gap-4">
           <Link href="/login" className="px-4 py-2 bg-green-600 text-white rounded-full text-sm hover:bg-green-500 transition">Account</Link>
+          <MiniCart cart={cart} total={total} count={count} open={open} setOpen={setOpen} removeFromCart={removeFromCart} />
         </div>
       </nav>
 
@@ -92,7 +95,9 @@ export default function Products() {
                   )}
                   <div className="flex items-center justify-between mt-3">
                     <span className="font-bold text-gray-900">KES {product.price}</span>
-                    <button className="bg-green-600 text-white px-3 py-1.5 rounded-lg text-sm hover:bg-green-500 transition">
+                    <button
+                      onClick={() => addToCart(product)}
+                      className="bg-green-600 text-white px-3 py-1.5 rounded-lg text-sm hover:bg-green-500 transition">
                       Add to Cart
                     </button>
                   </div>
